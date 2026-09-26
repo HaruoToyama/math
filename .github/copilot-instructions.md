@@ -1,22 +1,22 @@
-# Repository instructions
+# リポジトリの指示
 
-## Running and validating
+## 実行と検証
 
-- This is a dependency-free static browser application; there are no install, build, lint, or automated test commands.
-- Serve the repository root with `python3 -m http.server 8000`, then open `http://localhost:8000`.
-- Validate a focused behavior manually by exercising the related control in the browser. For example, for vertex dragging, drag each vertex and confirm the polygon, measurements, perimeter, area, and angle sum update; for a transformation, activate it and confirm the dashed comparison shape is congruent.
+- これは依存関係を持たない静的ブラウザアプリケーションであり、インストール、ビルド、lint、自動テスト用のコマンドは存在しない。
+- リポジトリのルートで `python3 -m http.server 8000` を実行し、`http://localhost:8000` を開く。
+- 対象の操作をブラウザで実行して、変更した機能を手動で検証する。たとえば頂点のドラッグでは、ポリゴン、各計測値、周の長さ、面積、内角の和が更新されることを確認する。変換では、点線の比較図形が合同になっていることを確認する。
 
-## Architecture
+## アーキテクチャ
 
-- `index.html` declares the Japanese-language application shell, controls, live metric regions, and SVG layers. Element IDs are the contract with `app.js`; keep them aligned when changing markup or behavior.
-- `app.js` owns all application state: the selected shape, its vertex array, an optional transformed comparison array, and the actively dragged vertex. It rebuilds the SVG polygon, vertex circles, and labels on every `render()` call, then updates text metrics through `updateFacts()`.
-- `styles.css` contains both the visual system and responsive layouts. The workspace changes from three columns to two columns below 1050px and one column below 720px, so preserve the corresponding HTML class structure when changing layout.
+- `index.html` は日本語のアプリケーション構造、操作コントロール、ライブ更新される計測表示、SVG レイヤーを定義する。要素 ID は `app.js` との契約なので、マークアップや動作を変更する場合は一致させる。
+- `app.js` は、選択中の図形、頂点配列、任意の変換後比較図形、ドラッグ中の頂点というすべての状態を管理する。`render()` のたびに SVG ポリゴン、星形の頂点、ラベルを再生成し、`updateFacts()` で計測表示を更新する。
+- `styles.css` は視覚表現とレスポンシブレイアウトを管理する。ワークスペースは 1050px 未満で 3 列から 2 列へ、720px 未満で 1 列へ変わるため、レイアウトを変更する場合は対応する HTML のクラス構造を維持する。
 
-## Geometry and interaction conventions
+## 図形と操作の規約
 
-- SVG coordinates use a `760 × 500` viewBox. Measurements convert canvas units to centimeters by dividing distances by `50`; area is converted by dividing shoelace-area pixel units by `2500`. Keep these two conversions consistent with the `1目盛り = 1 cm` UI statement.
-- Shape definitions are ordered vertex arrays in `initialShapes`; rendering, side lengths, angle calculations, and the shoelace area calculation all depend on the cyclic ordering. Add a shape by supplying its ordered points and using the same `shape`/`points` reset flow.
-- `render()` clears and recreates `#shape-layer` and `#label-layer`, including pointer listeners on newly created vertices. Do not retain references to generated SVG nodes across renders.
-- Pointer coordinates must pass through `pointFromEvent()` so dragging remains correct when the responsive SVG is scaled. Dragging a vertex clears `comparison`; shape selection, reset, randomization, and transformations follow the same state-reset model.
-- Transformations render only a dashed `comparison` polygon; they must not mutate the primary `points` array or change its calculated measurements.
-- Keep learner-facing copy in Japanese, including dynamic messages, labels, and accessibility text.
+- SVG 座標には `760 × 500` の viewBox を使う。長さはキャンバス単位を `50` で割って cm に変換し、面積は靴紐公式の結果を `2500` で割って変換する。この 2 つの変換は、UI の「1目盛り = 1 cm」という説明と整合させる。
+- 図形の定義は `initialShapes` にある順序付きの頂点配列である。描画、辺の長さ、角度計算、靴紐公式による面積計算はすべて頂点の循環順序に依存する。図形を追加する場合は、順序どおりの点を与え、既存の `shape`/`points` のリセットフローを使用する。
+- `render()` は `#shape-layer` と `#label-layer` を消去して再生成し、新しい頂点にポインターリスナーも設定する。レンダリングをまたいで生成済みの SVG ノードへの参照を保持しない。
+- ドラッグ中の座標は、レスポンシブで SVG が拡大縮小されても正しく動作するよう必ず `pointFromEvent()` を経由させる。頂点をドラッグすると `comparison` を消去する。図形選択、リセット、ランダム化、変換も同じ状態リセットのモデルに従う。
+- 変換では点線の `comparison` ポリゴンだけを描画する。元の `points` 配列やその計測値を変更しない。
+- 学習者向けの文言は、動的メッセージ、ラベル、アクセシビリティテキストを含めて日本語に統一する。

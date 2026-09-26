@@ -130,7 +130,21 @@ button.secondary { color: #453d9e; background: linear-gradient(135deg, #eef0ff, 
 button.secondary:hover { background: linear-gradient(135deg, #dfe3ff, #f2d9ff); }
 .button-stack { display: grid; gap: 9px; }
 .hint { display: flex; gap: 9px; margin-top: 26px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.82rem; line-height: 1.6; }
-.hint span { color: var(--coral); font-size: 1.2rem; }.hint p { margin: 0; }
+.hint-star {
+  display: inline-grid;
+  flex: 0 0 auto;
+  width: 1.7rem;
+  height: 1.7rem;
+  place-items: center;
+  color: #e93652;
+  background: #fff0f2;
+  border: 1px solid #ffc5ce;
+  border-radius: 50%;
+  box-shadow: 0 3px 8px rgba(233, 54, 82, 0.2);
+  font-size: 1rem;
+  line-height: 1;
+}
+.hint p { margin: 0; }
 
 .canvas-card { min-width: 0; overflow: hidden; }
 .canvas-heading { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px 13px; }
@@ -140,7 +154,7 @@ svg { display: block; width: 100%; height: auto; touch-action: none; background:
 .axis { stroke: #b7b2dc; stroke-width: 1.2; }
 .polygon { fill: rgba(91, 85, 233, 0.16); stroke: var(--blue); stroke-width: 3.5; stroke-linejoin: round; filter: drop-shadow(0 5px 4px rgba(91, 85, 233, 0.16)); }
 .comparison { fill: rgba(255, 102, 132, 0.08); stroke: var(--coral); stroke-width: 2.5; stroke-dasharray: 8 6; }
-.vertex { fill: var(--coral); stroke: white; stroke-width: 3; cursor: grab; filter: drop-shadow(0 3px 3px rgba(255, 102, 132, 0.3)); }
+.vertex { fill: #e93652; stroke: white; stroke-width: 3; stroke-linejoin: round; cursor: grab; filter: drop-shadow(0 3px 3px rgba(233, 54, 82, 0.32)); }
 .vertex:active { cursor: grabbing; }
 .label { fill: #3b347f; font-size: 16px; font-weight: 800; paint-order: stroke; stroke: white; stroke-width: 4px; stroke-linejoin: round; }
 .measurement { fill: #3e5870; font-size: 13px; font-weight: 700; paint-order: stroke; stroke: white; stroke-width: 4px; }

@@ -27,6 +27,14 @@ function el(name, attributes = {}, text = "") {
   return node;
 }
 
+function starPoints({ x, y }, outerRadius = 13, innerRadius = 6) {
+  return Array.from({ length: 10 }, (_, index) => {
+    const angle = -Math.PI / 2 + index * Math.PI / 5;
+    const radius = index % 2 === 0 ? outerRadius : innerRadius;
+    return `${x + Math.cos(angle) * radius},${y + Math.sin(angle) * radius}`;
+  }).join(" ");
+}
+
 function distance(a, b) {
   return Math.hypot(a.x - b.x, a.y - b.y) / 50;
 }
@@ -94,8 +102,8 @@ function render() {
       const dy = ((previous.y - point.y) + (next.y - point.y)) / 14;
       addText(point.x + dx, point.y + dy + 5, `${Math.round(angles[index])}°`, "measurement");
     }
-    addText(point.x, point.y - 17, String.fromCharCode(65 + index), "label");
-    const vertex = el("circle", { cx: point.x, cy: point.y, r: 10, class: "vertex", tabindex: 0, "aria-label": `頂点 ${String.fromCharCode(65 + index)}` });
+    addText(point.x, point.y - 21, String.fromCharCode(65 + index), "label");
+    const vertex = el("polygon", { points: starPoints(point), class: "vertex", tabindex: 0, "aria-label": `頂点 ${String.fromCharCode(65 + index)}` });
     vertex.addEventListener("pointerdown", (event) => {
       draggingIndex = index;
       vertex.setPointerCapture(event.pointerId);

@@ -30,8 +30,10 @@
           </select>
 
           <fieldset>
-            
-            ype="checkbox" checked /> 方眼</label>
+            <legend>表示するもの</legend>
+            <label class="toggle"><input id="show-lengths" type="checkbox" checked /> 辺の長さ</label>
+            <label class="toggle"><input id="show-angles" type="checkbox" checked /> 角度</label>
+            <label class="toggle"><input id="show-grid" type="checkbox" checked /> 方眼</label>
           </fieldset>
 
           <div class="button-stack">
@@ -40,7 +42,7 @@
           </div>
 
           <div class="hint">
-            <span aria-hidden="true">✦</span>
+            <span class="hint-star" aria-hidden="true">★</span>
             <p>色のついた点をドラッグすると、図形を自由に変えられます。</p>
           </div>
         </aside>
