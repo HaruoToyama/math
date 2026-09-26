@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>図形ラボ | 中学数学シミュレーター</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">MATH LAB / GEOMETRY</p>
+          <h1>図形ラボ</h1>
+          <p class="lead">点を動かして、図形のきまりを自分の手で見つけよう。</p>
+        </div>
+        <div class="goal-card">
+          <span>今日のミッション</span>
+          <strong id="mission">三角形の内角の和を確かめよう</strong>
+        </div>
+      </header>
+
+      <section class="workspace" aria-label="図形シミュレーター">
+        <aside class="panel controls">
+          <h2>シミュレーション</h2>
+          <label for="shape-select">図形をえらぶ</label>
+          <select id="shape-select">
+            <option value="triangle">三角形</option>
+            <option value="quadrilateral">四角形</option>
+          </select>
+
+          <fieldset>
+            <legend>表示するもの</legend>
+            <label class="toggle"><input id="show-lengths" type="checkbox" checked /> 辺の長さ</label>
+            <label class="toggle"><input id="show-angles" type="checkbox" checked /> 角度</label>
+            <label class="toggle"><input id="show-grid" type="checkbox" checked /> 方眼</label>
+          </fieldset>
+
+          <div class="button-stack">
+            <button id="reset-button" class="secondary">もとに戻す</button>
+            <button id="random-button">ランダムにする</button>
+          </div>
+
+          <div class="hint">
+            <span aria-hidden="true">✦</span>
+            <p>色のついた点をドラッグすると、図形を自由に変えられます。</p>
+          </div>
+        </aside>
+
+        <section class="canvas-card">
+          <div class="canvas-heading">
+            <div>
+              <p class="section-label">DRAG &amp; DISCOVER</p>
+              <h2 id="canvas-title">三角形をつくろう</h2>
+            </div>
+            <span class="drag-status" id="drag-status">頂点を動かせます</span>
+          </div>
+          <svg id="geometry-canvas" viewBox="0 0 760 500" role="img" aria-label="操作できる図形の座標平面">
+            <defs>
+              <pattern id="smallGrid" width="25" height="25" patternUnits="userSpaceOnUse">
+                <path d="M 25 0 L 0 0 0 25" fill="none" stroke="#d7e1ec" stroke-width="1" />
+              </pattern>
+            </defs>
+            <rect id="grid" width="760" height="500" fill="url(#smallGrid)" />
+            <line x1="0" y1="250" x2="760" y2="250" class="axis" />
+            <line x1="380" y1="0" x2="380" y2="500" class="axis" />
+            <g id="shape-layer"></g>
+            <g id="label-layer"></g>
+          </svg>
+          <p class="canvas-note">※ 1目盛り = 1 cm として計算しています</p>
+        </section>
+
+        <aside class="panel findings">
+          <h2>わかったこと</h2>
+          <div class="metric">
+            <span id="perimeter-label">周の長さ</span>
+            <strong id="perimeter">--</strong>
+          </div>
+          <div class="metric">
+            <span>面積</span>
+            <strong id="area">--</strong>
+          </div>
+          <div class="metric emphasis">
+            <span id="angle-sum-label">内角の和</span>
+            <strong id="angle-sum">--</strong>
+          </div>
+          <div id="discovery" class="discovery" aria-live="polite"></div>
+        </aside>
+      </section>
+
+      <section class="transform-section">
+        <div class="section-intro">
+          <p class="section-label">TRY IT</p>
+          <h2>合同な図形をつくってみよう</h2>
+          <p>変換しても、辺の長さ・角の大きさ・面積は変わるかな？</p>
+        </div>
+        <div class="transform-controls" aria-label="図形の変換">
+          <button data-transform="translate">平行移動</button>
+          <button data-transform="reflect">線対称移動</button>
+          <button data-transform="rotate">180°回転</button>
+          <button id="clear-transform" class="secondary">比較を消す</button>
+        </div>
+        <p id="transform-message" class="transform-message">変換ボタンを押すと、点線の図形が現れます。</p>
+      </section>
+    </main>
+
+    <footer>図形を「見る」から、図形を「動かして考える」へ。</footer>
+    <script src="app.js"></script>
+  </body>
+</html>
